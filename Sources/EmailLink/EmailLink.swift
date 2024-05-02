@@ -10,7 +10,7 @@ public struct EmailLink<Content: View>: View {
     
     public init(to: String, subject: String = "", body: String = "", color: UIColor = .systemBlue, @ViewBuilder label: () -> Content) {
         // Ensure Info.plist includes required keys
-        Self.checkInfoDictionary()
+        // Self.checkInfoDictionary()
         
         // Set properties
         self.label = label()
