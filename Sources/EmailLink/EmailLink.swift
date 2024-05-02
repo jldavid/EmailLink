@@ -83,7 +83,7 @@ public struct EmailLink<Content: View>: View {
 
     public var body: some View {
         HStack {}
-            .task {
+            .onAppear {
                 showAlert = true
             }
             .actionSheet(isPresented: $showAlert) {
