@@ -82,17 +82,27 @@ public struct EmailLink<Content: View>: View {
     }
 
     public var body: some View {
-        HStack {}
-            .onAppear {
+        Button(action: {
+            if getAvailableClients().count > 2 {
                 showAlert = true
+            } else {
+                // Only open first found
+                for client in clients {
+                    if UIApplication.shared.canOpenURL(client.value.url) {
+                        UIApplication.shared.open(client.value.url)
+                    }
+                }
             }
-            .actionSheet(isPresented: $showAlert) {
-                ActionSheet(
-                    title: Text("Multiple Apps Found"),
-                    message: Text("Which app do you want to use to send this email?"),
-                    buttons: actionSheetButtons()
-                )
-            }
+        }) {
+            label
+        }
+        .actionSheet(isPresented: $showAlert) {
+            ActionSheet(
+                title: Text("Multiple Apps Found"),
+                message: Text("Which app do you want to use to send this email?"),
+                buttons: actionSheetButtons()
+            )
+        }
     }
     
     private func actionSheetButtons() -> [ActionSheetButton] {
